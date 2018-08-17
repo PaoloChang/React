@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ContactInfo from './ContactInfo';
 import ContactDetails from './ContactDetails';
 import ContactCreate from './ContactCreate';
+
 import update from 'react-addons-update';
 
 export default class Contact extends Component {
@@ -30,6 +31,22 @@ export default class Contact extends Component {
         };
 
         // this.handleChange = this.handleChangeChange.bind(this);
+    }
+
+    componentDidMount() {
+        const contactData = localStorage.contactData;
+
+        if(contactData) {
+            this.setState({
+                contactData: JSON.parse(contactData)
+            })
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if(JSON.stringify(prevState.contactData) != JSON.stringify(this.state.contactData)) {
+            localStorage.contactData = JSON.stringify(this.state.contactData);
+        }
     }
 
     // This arrow function does not need to specify this
