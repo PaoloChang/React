@@ -3,17 +3,25 @@ var app = express();
 
 var user = require('./routes/user');
 
+var morgan = require('morgan');
+var bodyParser = require('body-parser');
+
 /*
     Middleware
 */
 
+// var myLogger = function(req, res, next) {
+//     console.log(req.url);
+//     next();
+// }
 
-var myLogger = function(req, res, next) {
-    console.log(req.url);
-    next();
-}
+// app.use(myLogger);
 
-app.use(myLogger);
+app.use(morgan('dev'));
+app.use(bodyParser.json());
+
+/* 아래 Hello World 보다 우선권이 주어짐 */
+app.use('/', express.static('public'));
 
 /*
     app. METHOD(PATH, HANDLER)
